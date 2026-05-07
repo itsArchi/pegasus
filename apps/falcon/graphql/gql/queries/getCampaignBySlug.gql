@@ -1,0 +1,11 @@
+query GetCampaignBySlug($slug: String!) {
+  campaignBySlug(slug: $slug) {
+    id
+    name
+    slug
+    description
+    status
+    created_at
+    updated_at
+  }
+}

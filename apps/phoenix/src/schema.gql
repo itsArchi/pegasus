@@ -1,0 +1,274 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AdminActionDro {
+  message: String!
+  success: Boolean!
+  user: User
+}
+
+type AdminListDro {
+  data: [User!]!
+  total: Int!
+}
+
+type AdminStatsDro {
+  """Total user aktif"""
+  activeUsers: Int!
+
+  """Total user non-aktif"""
+  inactiveUsers: Int!
+
+  """Total admin"""
+  totalAdmins: Int!
+
+  """Total semua user"""
+  totalUsers: Int!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type Campaign {
+  created_at: String!
+
+  """Deskripsi campaign"""
+  description: String
+
+  """UUID v4 — dapat di-generate oleh client maupun server"""
+  id: ID!
+
+  """URL gambar campaign (Cloudinary)"""
+  image_url: String
+
+  """Nama campaign"""
+  name: String!
+
+  """URL slug, contoh: tokyo-natsu-matsuri-2026"""
+  slug: String!
+  status: CampaignStatus!
+  updated_at: String!
+}
+
+type CampaignListDro {
+  data: [Campaign!]!
+  total: Int!
+}
+
+"""Campaign publication status"""
+enum CampaignStatus {
+  DRAFT
+  PUBLISHED
+}
+
+input CreateAdminInput {
+  email: String!
+
+  """UUID opsional"""
+  id: ID
+  name: String!
+
+  """Password minimal 8 karakter"""
+  password: String!
+}
+
+input CreateCampaignInput {
+  description: String
+
+  """UUID opsional — jika tidak diisi, server akan generate otomatis"""
+  id: ID
+
+  """URL gambar dari Cloudinary"""
+  image_url: String
+
+  """Nama campaign"""
+  name: String!
+
+  """URL slug, contoh: tokyo-natsu-matsuri-2026"""
+  slug: String!
+  status: CampaignStatus = DRAFT
+}
+
+input CreateSubmissionInput {
+  campaign_id: ID!
+  email: String!
+  name: String!
+  phone: String
+}
+
+input CreateUserInput {
+  """Email unik untuk login"""
+  email: String!
+
+  """UUID opsional — jika tidak diisi, server akan generate otomatis"""
+  id: ID
+
+  """Nama lengkap"""
+  name: String!
+
+  """Password minimal 8 karakter"""
+  password: String!
+  role: UserRole = USER
+}
+
+type DeleteCampaignDro {
+  message: String!
+  success: Boolean!
+}
+
+type DeleteUserDro {
+  message: String!
+  success: Boolean!
+}
+
+input DemoteAdminInput {
+  """ID admin yang akan diturunkan menjadi user"""
+  adminId: ID!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  """Aktifkan kembali akun user"""
+  activateUser(userId: ID!): AdminActionDro!
+
+  """Buat akun admin baru"""
+  createAdmin(input: CreateAdminInput!): User!
+  createCampaign(input: CreateCampaignInput!): Campaign!
+  createUser(input: CreateUserInput!): User!
+
+  """Non-aktifkan akun user"""
+  deactivateUser(userId: ID!): AdminActionDro!
+  deleteCampaign(id: ID!): DeleteCampaignDro!
+  deleteUser(id: ID!): DeleteUserDro!
+
+  """Turunkan admin menjadi user biasa"""
+  demoteToUser(input: DemoteAdminInput!): AdminActionDro!
+  login(input: LoginInput!): AuthPayload!
+
+  """Jadikan user biasa menjadi admin"""
+  promoteToAdmin(input: PromoteUserInput!): AdminActionDro!
+  register(input: RegisterInput!): AuthPayload!
+
+  """Daftar ke event campaign"""
+  submitRegistration(input: CreateSubmissionInput!): SubmitResultDro!
+  updateCampaign(id: ID!, input: UpdateCampaignInput!): Campaign!
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+}
+
+input PromoteUserInput {
+  """ID user yang akan dijadikan admin"""
+  userId: ID!
+}
+
+type Query {
+  """Statistik user & admin"""
+  adminStats: AdminStatsDro!
+
+  """Daftar semua admin"""
+  admins: AdminListDro!
+
+  """Daftar semua user (admin & user)"""
+  allUsers: AdminListDro!
+  campaign(id: ID!): Campaign!
+  campaignBySlug(slug: String!): Campaign
+  campaigns(status: CampaignStatus): CampaignListDro!
+
+  """Daftar submission per campaign"""
+  submissions(campaign_id: ID!): SubmissionListDro!
+  user(id: ID!): User!
+  users: UserListDro!
+}
+
+input RegisterInput {
+  email: String!
+  name: String!
+  password: String!
+
+  """Default: USER"""
+  role: UserRole = USER
+}
+
+type Submission {
+  campaign_id: String!
+  email: String!
+  id: ID!
+  name: String!
+  phone: String
+  submitted_at: String!
+}
+
+type SubmissionListDro {
+  data: [Submission!]!
+  total: Int!
+}
+
+type SubmitResultDro {
+  message: String!
+  submission: Submission
+  success: Boolean!
+}
+
+input UpdateCampaignInput {
+  description: String
+
+  """URL gambar dari Cloudinary"""
+  image_url: String
+
+  """Nama campaign"""
+  name: String
+
+  """URL slug, contoh: tokyo-natsu-matsuri-2026"""
+  slug: String
+  status: CampaignStatus = DRAFT
+}
+
+input UpdateUserInput {
+  """Email unik untuk login"""
+  email: String
+  is_active: Boolean
+
+  """Nama lengkap"""
+  name: String
+
+  """Password minimal 8 karakter"""
+  password: String
+  role: UserRole = USER
+}
+
+type User {
+  created_at: String!
+
+  """Alamat email unik"""
+  email: String!
+
+  """UUID v4"""
+  id: ID!
+
+  """Status aktif akun"""
+  is_active: Boolean!
+
+  """Nama lengkap"""
+  name: String!
+
+  """Role: admin atau user"""
+  role: UserRole!
+  updated_at: String!
+}
+
+type UserListDro {
+  data: [User!]!
+  total: Int!
+}
+
+"""Role pengguna sistem"""
+enum UserRole {
+  ADMIN
+  USER
+}

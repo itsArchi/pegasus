@@ -1,0 +1,11 @@
+mutation CreateCampaign($input: CreateCampaignInput!) {
+  createCampaign(input: $input) {
+    id
+    name
+    slug
+    description
+    status
+    created_at
+    updated_at
+  }
+}

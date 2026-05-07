@@ -1,0 +1,12 @@
+query GetCampaign($id: ID!) {
+  campaign(id: $id) {
+    id
+    name
+    slug
+    description
+    image_url
+    status
+    created_at
+    updated_at
+  }
+}

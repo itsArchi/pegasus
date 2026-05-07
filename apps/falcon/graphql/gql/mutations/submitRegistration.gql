@@ -1,0 +1,10 @@
+mutation SubmitRegistration($input: CreateSubmissionInput!) {
+  submitRegistration(input: $input) {
+    success
+    message
+    submission {
+      id
+      submitted_at
+    }
+  }
+}

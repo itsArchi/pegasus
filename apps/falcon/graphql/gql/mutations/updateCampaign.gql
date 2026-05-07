@@ -1,0 +1,11 @@
+mutation UpdateCampaign($id: ID!, $input: UpdateCampaignInput!) {
+  updateCampaign(id: $id, input: $input) {
+    id
+    name
+    slug
+    description
+    status
+    created_at
+    updated_at
+  }
+}

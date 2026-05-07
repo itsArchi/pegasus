@@ -1,0 +1,14 @@
+query GetUsers {
+  users {
+    data {
+      id
+      name
+      email
+      role
+      is_active
+      created_at
+      updated_at
+    }
+    total
+  }
+}
