@@ -1,0 +1,53 @@
+services:
+  phoenix:
+    image: DOCKERHUB_USERNAME/pegasus-phoenix:latest
+    restart: unless-stopped
+    env_file: ./apps/phoenix/.env.production
+    expose:
+      - "3000"
+    networks:
+      - internal
+
+  falcon:
+    image: DOCKERHUB_USERNAME/pegasus-falcon:latest
+    restart: unless-stopped
+    expose:
+      - "3000"
+    environment:
+      - NEXT_PUBLIC_PHOENIX_URL=https://api.japan-fest.my.id/graphql
+    networks:
+      - internal
+
+  dolphin:
+    image: DOCKERHUB_USERNAME/pegasus-dolphin:latest
+    restart: unless-stopped
+    expose:
+      - "3001"
+    environment:
+      - NEXT_PUBLIC_PHOENIX_URL=https://api.japan-fest.my.id/graphql
+    networks:
+      - internal
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - certbot-www:/var/www/certbot:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - phoenix
+      - falcon
+      - dolphin
+    networks:
+      - internal
+
+volumes:
+  certbot-www:
+
+networks:
+  internal:
+    driver: bridge
