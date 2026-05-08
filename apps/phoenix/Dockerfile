@@ -23,7 +23,7 @@ WORKDIR /app
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY apps/phoenix/package.json ./apps/phoenix/
 COPY --from=builder /app/apps/phoenix/dist ./apps/phoenix/dist
-RUN pnpm deploy --filter phoenix --prod /app/deploy
+RUN pnpm deploy --filter phoenix --prod --legacy /app/deploy
 
 # ---- runner ----
 FROM node:22-alpine AS runner
