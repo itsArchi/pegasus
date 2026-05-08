@@ -4,6 +4,7 @@ query GetCampaignBySlug($slug: String!) {
     name
     slug
     description
+    image_url
     status
     created_at
     updated_at

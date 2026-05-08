@@ -14,7 +14,7 @@ import type {
   SubmitRegistrationMutationVariables,
 } from '@/graphql/gql/generated'
 
-const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1573588506511-9f93976646cc?q=80&w=1974&auto=format&fit=crop'
+const FALLBACK_IMAGE = '/logo.jpg'
 
 interface FormState {
   name: string

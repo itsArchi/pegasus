@@ -1,5 +1,5 @@
 query GetCampaigns {
-  campaigns {
+  campaigns(status: PUBLISHED) {
     data {
       id
       name
