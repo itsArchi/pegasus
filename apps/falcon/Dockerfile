@@ -19,6 +19,9 @@ COPY pnpm-workspace.yaml package.json ./
 ARG NEXT_PUBLIC_PHOENIX_URL
 ENV NEXT_PUBLIC_PHOENIX_URL=$NEXT_PUBLIC_PHOENIX_URL
 
+ARG NEXT_PUBLIC_SITE_URL
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+
 RUN pnpm --filter falcon build
 
 # ---- runner ----
