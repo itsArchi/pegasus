@@ -1,6 +1,6 @@
 services:
   phoenix:
-    image: DOCKERHUB_USERNAME/pegasus-phoenix:latest
+    image: itsarchi1/pegasus-phoenix:latest
     restart: unless-stopped
     env_file: ./apps/phoenix/.env.production
     expose:
@@ -9,17 +9,18 @@ services:
       - internal
 
   falcon:
-    image: DOCKERHUB_USERNAME/pegasus-falcon:latest
+    image: itsarchi1/pegasus-falcon:latest
     restart: unless-stopped
     expose:
       - "3000"
     environment:
       - NEXT_PUBLIC_PHOENIX_URL=https://api.japan-fest.my.id/graphql
+      - NEXT_PUBLIC_SITE_URL=https://japan-fest.my.id
     networks:
       - internal
 
   dolphin:
-    image: DOCKERHUB_USERNAME/pegasus-dolphin:latest
+    image: itsarchi1/pegasus-dolphin:latest
     restart: unless-stopped
     expose:
       - "3001"
